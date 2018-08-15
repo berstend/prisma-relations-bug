@@ -1,0 +1,18 @@
+type Meta @pgTable(name: "meta") {
+  id: ID! @unique
+  releaseYear: Int
+  titles: [Title!]!
+}
+
+type Rating @pgTable(name: "rating") {
+  id: Int! @unique
+  isPopular: Boolean!
+  titles: [Title!]!
+}
+
+type Title @pgTable(name: "title") {
+  id: Int! @unique
+  meta: Meta @pgRelation(column: "metaId")
+  rating: Rating @pgRelation(column: "ratingId")
+  type: String!
+}

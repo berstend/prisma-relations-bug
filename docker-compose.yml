@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  db:
+    image: 'postgres:10'
+    restart: 'always'
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_DB: 'typeormtest2'
+      POSTGRES_USER: 'typeormtest2'
+      POSTGRES_PASSWORD: 'password'
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  prisma:
+    image: prismagraphql/prisma:1.13
+    restart: always
+    ports:
+      - '4466:4466'
+    depends_on:
+      - db
+    environment:
+      PRISMA_CONFIG: |
+        port: 4466
+        databases:
+          default:
+            connector: postgres
+            host: db
+            port: 5432
+            database: typeormtest2
+            schema: public
+            user: typeormtest2
+            password: password
+            migrations: false
+            ssl: false
