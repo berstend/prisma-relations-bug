@@ -18,7 +18,7 @@ services:
       - 8080:8080
 
   prisma:
-    image: prismagraphql/prisma:1.13
+    image: prismagraphql/prisma:1.14
     restart: always
     ports:
       - '4466:4466'
